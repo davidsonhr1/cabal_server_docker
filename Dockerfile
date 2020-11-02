@@ -49,7 +49,7 @@ RUN yum update && \
     gem install foreman
 
 ENV ACCEPT_EULA=Y
-ENV SA_PASSWORD=**d456123789d**
+ENV SA_PASSWORD=*D*456*123789d*d
 ENV MSSQL_PID=Express
 
 WORKDIR /app
@@ -82,4 +82,4 @@ RUN wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement
 
 EXPOSE 1433
 
-CMD ["/app/bin/start.sh"]
+CMD ["/usr/sbin/init"]

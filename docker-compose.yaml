@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+    sqlserver:
+      image: cabal
+      hostname: sqlserver
+      network_mode: bridge
+      environment:
+        ACCEPT_EULA: "Y"
+        MSSQL_PID: Express
+      volumes:
+        - ./sqlserver:/var/opt/mssql
+      ports:
+        - '1433:1433'
+      restart: unless-stopped
+    cabalserver:
+      build: .
+      image: cabal
+      network_mode: bridge
+      command: /bin/bash -l -c "bundle install && bundle exec rake db:migrate 2>/dev/null || rake db:setup && foreman start"
+      volumes:
+        - .:/app
+        - '~/.ssh:/root/.ssh'
+      ports:
+        - '3000:3000'
+      depends_on:
+        - sqlserver
